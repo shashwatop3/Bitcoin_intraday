@@ -11,6 +11,12 @@ class Positions:
     def add_position(self, position: Union[BuyOrder, SellOrder]) -> None:
         self.positions.append(position)
 
+    def check_positions(self, current_price: float) -> None:
+        for position in self.positions:
+            if(position.check(current_price)):
+                self.close_position(position, current_price)
+
+
     def close_position(self, position: Union[BuyOrder, SellOrder], close_price: float) -> None:
         position.close(close_price)
         self.profit_loss += position.pl
@@ -33,5 +39,3 @@ class Positions:
     def get_profit_loss(self) -> float:
         return self.profit_loss
 
-    def get_open_positions(self) -> List[Union[BuyOrder, SellOrder]]:
-        return [position for position in self.positions if position.status == 'open']
