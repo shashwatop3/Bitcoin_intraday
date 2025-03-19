@@ -2,8 +2,8 @@ class BuyOrder:
     def __init__(self, price, quantity, stoploss=None, takeprofit=None):
         self.price = price
         self.quantity = quantity
-        self.stoploss = stoploss
-        self.takeprofit = takeprofit
+        self.stoploss = (1-stoploss)*price if stoploss is not None else None
+        self.takeprofit = (1+takeprofit)*price if takeprofit is not None else None
         self.status = 'open'
     def close(self, close_price):
         self.close_price = close_price
@@ -19,8 +19,8 @@ class SellOrder:
     def __init__(self, price, quantity, stoploss=None, takeprofit=None):
         self.price = price
         self.quantity = quantity
-        self.stoploss = stoploss
-        self.takeprofit = takeprofit
+        self.stoploss = (1+stoploss)*price if stoploss is not None else None
+        self.takeprofit = (1-takeprofit)*price if takeprofit is not None else None
         self.status = 'open'
     def close(self, close_price):
         self.close_price = close_price
