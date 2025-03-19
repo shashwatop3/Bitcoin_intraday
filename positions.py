@@ -7,6 +7,8 @@ class Positions:
         self.positions: List[Union[BuyOrder, SellOrder]] = []  
         self.closed_positions: List[Union[BuyOrder, SellOrder]] = []  
         self.profit_loss: float = 0  
+        self.profit_count: int = 0
+        self.loss_count: int = 0
 
     def add_position(self, position: Union[BuyOrder, SellOrder]) -> None:
         self.positions.append(position)
@@ -20,6 +22,10 @@ class Positions:
     def close_position(self, position: Union[BuyOrder, SellOrder], close_price: float) -> None:
         position.close(close_price)
         self.profit_loss += position.pl
+        if(position.pl > 0):
+            self.profit_count += 1
+        else:
+            self.loss_count += 1
         self.closed_positions.append(position)
         self.positions.remove(position)
 
@@ -38,4 +44,12 @@ class Positions:
 
     def get_profit_loss(self) -> float:
         return self.profit_loss
-
+    
+    def get_success_rate(self) -> float:
+        return self.profit_count / (self.profit_count + self.loss_count) if self.profit_count + self.loss_count > 0 else 0
+    
+    def get_profit_count(self) -> int:
+        return self.profit_count
+    
+    def get_loss_count(self) -> int:
+        return self.loss_count
