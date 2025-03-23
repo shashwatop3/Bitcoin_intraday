@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+numpy==1.26.4
+scikit-learn
+tensorflow
+keras
+pydantic
+pandas_ta
+xgboost
+tabulate
